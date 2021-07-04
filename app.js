@@ -4,7 +4,7 @@ const dotenv = require("dotenv");
 
 dotenv.config({ path: "server/config/config.env" });
 
-const auth = require("./routes/auth");
+// const auth = require("./routes/auth");
 
 // app.use("/api/v1/", auth);
 app.get("/", (req, res) => {
