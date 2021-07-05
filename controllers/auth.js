@@ -4,6 +4,7 @@ const bcrypt = require("bcryptjs");
 const User = require("../models/user");
 
 exports.register = async (req, res) => {
+  console.log(req.body);
   const isEmailExist = await User.findOne({ email: req.body.email });
 
   if (isEmailExist)
