@@ -14,7 +14,11 @@ app.use("/api/v1/auth", authRoute);
 app.use("/api/v1/user", userRoute);
 
 app.get("/", (req, res) => {
-    res.send("baba boi");
-  });
+  res.send("baba boi");
+});
+
+app.get("/version", (req, res) => {
+  res.send("1.0.0");
+});
 
 module.exports = app;
