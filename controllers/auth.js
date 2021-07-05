@@ -47,15 +47,14 @@ exports.login = async (req, res) => {
   });
 };
 
-exports.verify = (req, res, next) => {
-  const token = req.header("auth-token");
-  jwt.verify(token, process.env.TOKEN_SECRET, function (err, decoded) {
-    if (err) {
-      res
-        .status(400)
-        .send({ message: "Your session is expired please login again" });
-    } else {
-      next();
-    }
+exports.logout = (req, res) => {
+  res.cookie("token", null, {
+    expires: new Date(Date.now()),
+    httpOnly: true,
+  });
+
+  res.status(200).json({
+    success: true,
+    message: "Logged out",
   });
 };
