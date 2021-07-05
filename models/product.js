@@ -17,7 +17,31 @@ const productSchema = new mongoose.Schema(
       type: Number,
       default: 0,
     },
-    feedbacks: [{ type: mongoose.Schema.Types.ObjectId, ref: "Feedback" }],
+    numOfReviews: {
+      type: Number,
+      default: 0,
+    },
+    reviews: [
+      {
+        user: {
+          type: mongoose.Schema.ObjectId,
+          ref: "User",
+          required: true,
+        },
+        title: {
+          type: String,
+          required: true,
+        },
+        rating: {
+          type: Number,
+          required: true,
+        },
+        description: {
+          type: String,
+          required: true,
+        },
+      },
+    ],
     images: [
       {
         public_id: {
@@ -46,10 +70,6 @@ const productSchema = new mongoose.Schema(
       type: String,
     },
     stock: {
-      type: Number,
-      default: 0,
-    },
-    numOfReviews: {
       type: Number,
       default: 0,
     },
