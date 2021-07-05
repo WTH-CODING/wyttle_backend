@@ -3,12 +3,12 @@ var router = express.Router();
 
 const { verify } = require("../middlewares/verifyToken");
 
-const routes = require("../controllers/user");
+const user = require("../controllers/user");
 
-router.get("/", verify, routes.getAllUsers);
-router.get("/user/:id", verify, routes.getUserById);
-router.get("/email/:email", verify, routes.getUserByEmail);
-router.get("/count", verify, routes.userCount);
-router.put("/update", verify, routes.updateUser);
+router.get("/", verify, user.getAllUsers);
+router.get("/user/:id", verify, user.getUserById);
+router.get("/email/:email", verify, user.getUserByEmail);
+router.get("/count", verify, user.userCount);
+router.put("/update", verify, user.updateUser);
 
 module.exports = router;
