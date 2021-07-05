@@ -9,9 +9,8 @@ const {
 
 const { verify } = require("../middlewares/verifyToken");
 
-router.route("/order/new").post(verify, newOrder);
-
-router.route("/order/:id").get(verify, getSingleOrder);
-router.route("/orders/me").get(verify, myOrders);
+router.post("/order/new", verify, newOrder);
+router.get("/order/:id", verify, getSingleOrder);
+router.get("/orders/me", verify, myOrders);
 
 module.exports = router;

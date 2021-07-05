@@ -11,6 +11,9 @@ const cartSchema = mongoose.Schema(
         ref: "Product",
       },
     ],
+    count: {
+      type: Number,
+    },
   },
   { timestamps: true }
 );
