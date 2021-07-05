@@ -8,16 +8,17 @@ const APIFeatures = require("../utils/apiFeatures");
 exports.getProducts = catchAsyncErrors(async (req, res, next) => {
   const resPerPage = 4;
   const productsCount = await Product.countDocuments();
-
-  const apiFeatures = new APIFeatures(Product.find(), req.query)
-    .search()
-    .filter();
-
-  let products = await apiFeatures.query;
+  let products = [];
+  await Product.find({}, (err, foundProducts) => {
+    if (err) {
+      console.log(err);
+    } else {
+      foundProducts.forEach((product) => {
+        products.push(product);
+      });
+    }
+  });
   let filteredProductsCount = products.length;
-
-  apiFeatures.pagination(resPerPage);
-  products = await apiFeatures.query;
 
   res.status(200).json({
     success: true,
@@ -91,7 +92,7 @@ exports.createProductReview = catchAsyncErrors(async (req, res, next) => {
 
 // Get Product Reviews   =>   /api/v1/reviews
 exports.getProductReviews = catchAsyncErrors(async (req, res, next) => {
-  const product = await Product.findById(req.query.id);
+  const product = await Product.findById(req.params.id);
 
   res.status(200).json({
     success: true,
