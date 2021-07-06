@@ -51,6 +51,10 @@ var userSchema = mongoose.Schema(
       type: String,
       trim: true,
     },
+    coins:{
+      type: Number,
+      default: 50,
+    },
     isverified: {
       type: Boolean,
       default: false,

@@ -6,7 +6,7 @@ const product = require("../controllers/product");
 const { verify } = require("../middlewares/verifyToken");
 
 
-router.get("/", verify ,product.getProducts);
+router.get("/", product.getProducts);
 router.get("/count", verify ,product.productCount);
 router.get("/home", verify ,product.getHomeProducts);
 router.get("/:id", verify ,product.getSingleProduct);
