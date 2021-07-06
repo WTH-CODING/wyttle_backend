@@ -126,7 +126,6 @@ exports.createProductReview = async (req, res) => {
     });
 };
 
-// Get Product Reviews   =>   /api/v1/reviews
 exports.getProductReviews = async (req, res) => {
     const product = await Product.findById(req.params.id);
 
@@ -135,3 +134,18 @@ exports.getProductReviews = async (req, res) => {
         reviews: product.reviews,
     });
 };
+
+
+exports.productCount = (req, res) => {
+    Product.collection.countDocuments({}, (err, count) => {
+      if (err) {
+        res.status(400).json({
+          message: "prod count error",
+        });
+      } else {
+        res.json({
+          count,
+        });
+      }
+    });
+  };
