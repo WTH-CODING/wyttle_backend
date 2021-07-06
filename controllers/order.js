@@ -3,14 +3,24 @@ const Product = require("../models/product");
 
 exports.createOrder = (req, res) => {
     const order = new Order(req.body);
-    console.log(order.orderItems);
     order.save((err, createdorder) => {
         if (err) {
             console.log(err);
             res.status(400).json({
                 error: "error saving order in DB",
             });
-        } else res.json({ message: "order saved" , order: createdorder});
+        } else {
+            for (let i = 0; i < order.orderItems.length; i++) {
+                var orderItem = order.orderItems[i].item;
+                Product.findById(orderItem).exec((err, item) => {
+                    console.log(item);
+                    item.stock -= order.orderItems[i].count;
+                    console.log(item);
+                    item.save();
+                })
+            };
+            res.json({ message: "order saved", order: createdorder });
+        }
     });
 };
 
