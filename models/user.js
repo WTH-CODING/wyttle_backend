@@ -1,5 +1,13 @@
 const mongoose = require("mongoose");
 
+const CartSchema = mongoose.Schema({
+  item: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "Product",
+  },
+  count: String,
+})
+
 var userSchema = mongoose.Schema(
   {
     name: {
@@ -19,15 +27,11 @@ var userSchema = mongoose.Schema(
       trim: true,
       required: true,
     },
+    cart: {
+      type: [CartSchema],
+      default: () => ([]),
+    },
     phone: {
-      type: String,
-      trim: true,
-    },
-    roll: {
-      type: String,
-      trim: true,
-    },
-    dob: {
       type: String,
       trim: true,
     },
