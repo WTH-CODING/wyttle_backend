@@ -13,9 +13,7 @@ exports.createOrder = (req, res) => {
             for (let i = 0; i < order.orderItems.length; i++) {
                 var orderItem = order.orderItems[i].item;
                 Product.findById(orderItem).exec((err, item) => {
-                    console.log(item);
                     item.stock -= order.orderItems[i].count;
-                    console.log(item);
                     item.save();
                 })
             };

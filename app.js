@@ -7,6 +7,7 @@ const authRoute = require("./routes/auth");
 const userRoute = require("./routes/user");
 const productRoute = require("./routes/product");
 const orderRoute = require("./routes/order");
+const reviewRoute = require("./routes/review");
 
 app.use(cors());
 app.options("*", cors());
@@ -18,6 +19,7 @@ app.use("/api/v1/user", userRoute);
 
 app.use("/api/v1/product", productRoute);
 app.use("/api/v1/order", orderRoute);
+app.use("/api/v1/review", reviewRoute);
 
 // app.get("/", (req, res) => {
 //   res.send("baba boi");

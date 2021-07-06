@@ -19,30 +19,9 @@ const productSchema = new mongoose.Schema(
     },
     numOfReviews: {
       type: Number,
-      default: 0,
+      default: 1,
     },
-    reviews: [
-      {
-        user: {
-          type: mongoose.Schema.ObjectId,
-          ref: "User",
-          required: true,
-        },
-        title: {
-          type: String,
-          required: true,
-        },
-        rating: {
-          type: Number,
-          required: true,
-        },
-        description: {
-          type: String,
-          required: true,
-        },
-      },
-    ],
-    imageurl:{
+    imageurl: {
       type: String,
     },
     category: {

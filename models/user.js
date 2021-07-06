@@ -51,10 +51,6 @@ var userSchema = mongoose.Schema(
       type: String,
       trim: true,
     },
-    coins:{
-      type: Number,
-      default: 50,
-    },
     isverified: {
       type: Boolean,
       default: false,
@@ -70,7 +66,7 @@ var userSchema = mongoose.Schema(
     },
     numOfCoins: {
       type: Number,
-      default: 0,
+      default: 50,
     },
   },
   { timestamps: true }
