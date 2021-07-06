@@ -15,7 +15,7 @@ const productSchema = new mongoose.Schema(
     },
     ratings: {
       type: Number,
-      default: 0,
+      default: 5.0,
     },
     numOfReviews: {
       type: Number,
@@ -42,21 +42,14 @@ const productSchema = new mongoose.Schema(
         },
       },
     ],
-    images: [
-      {
-        public_id: {
-          type: String,
-        },
-        url: {
-          type: String,
-        },
-      },
-    ],
+    imageurl:{
+      type: String,
+    },
     category: {
       type: String,
       enum: {
         values: [
-          "Jerseys,",
+          "Jerseys",
           "Equipments",
           "Safety Gears",
           "Training Equipments",
@@ -65,9 +58,6 @@ const productSchema = new mongoose.Schema(
         ],
         message: "Please select correct category for product",
       },
-    },
-    seller: {
-      type: String,
     },
     stock: {
       type: Number,

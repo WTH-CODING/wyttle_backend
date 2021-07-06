@@ -10,40 +10,27 @@ const orderSchema = mongoose.Schema(
         type: String,
         required: true,
       },
-      postalCode: {
-        type: String,
-        required: true,
-      },
-      country: {
-        type: String,
-        required: true,
-      },
     },
     user: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "User",
     },
-    cart: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "Cart",
-    },
     orderItems: [
       {
-        type: mongoose.Schema.Types.ObjectId,
-        required: true,
-        ref: "Product",
-      },
+        item: {
+          type: mongoose.Schema.Types.ObjectId,
+          required: true,
+          ref: "Product",
+        },
+        count: Number,
+      }
     ],
-    paymentInfo: {
-      id: {
-        type: String,
-      },
-      status: {
-        type: String,
-      },
+    isPaid: {
+      type: Boolean,
+      default: false,
     },
-    paidAt: {
-      type: Date,
+    transactionId: {
+      type: String,
     },
     itemsPrice: {
       type: Number,
@@ -60,9 +47,6 @@ const orderSchema = mongoose.Schema(
     orderStatus: {
       type: String,
       default: "Processing",
-    },
-    deliveredAt: {
-      type: Date,
     },
   },
   { timestamps: true }
