@@ -35,6 +35,10 @@ var userSchema = mongoose.Schema(
       type: String,
       trim: true,
     },
+    address: {
+      type: String,
+      trim: true,
+    },
     isverified: {
       type: Boolean,
       default: false,
