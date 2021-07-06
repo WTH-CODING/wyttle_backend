@@ -48,7 +48,6 @@ exports.getAllUsers = (req, res) => {
 };
 
 exports.updateUser = (req, res) => {
-  console.log(req.body);
   User.findByIdAndUpdate(
     { _id: req.body._id },
     { $set: req.body },
