@@ -8,6 +8,14 @@ const CartSchema = mongoose.Schema({
   count: String,
 })
 
+const wishlsitSchema = mongoose.Schema({
+  item: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "Product",
+  },
+})
+
+
 var userSchema = mongoose.Schema(
   {
     name: {
@@ -29,6 +37,10 @@ var userSchema = mongoose.Schema(
     },
     cart: {
       type: [CartSchema],
+      default: () => ([]),
+    },
+    wishlist: {
+      type: [wishlsitSchema],
       default: () => ([]),
     },
     phone: {
