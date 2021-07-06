@@ -100,9 +100,9 @@ exports.getThumbReview = (req, res) => {
                 message: "review thumnb error",
             });
         } else {
-            res.json({
-                reviews,
-            });
+            res.json(
+                reviews
+            );
         }
     });
 }
