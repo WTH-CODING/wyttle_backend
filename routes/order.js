@@ -1,14 +1,16 @@
-// const express = require("express");
-// const router = express.Router();
+const express = require("express");
+const router = express.Router();
 
-// const controller = require("../controllers/order");
+const order = require("../controllers/order");
 
-// const { verify } = require("../middlewares/verifyToken");
+const { verify } = require("../middlewares/verifyToken");
 
-// router.post("/new", verify, controller.newOrder);
-// router.get("/:id", verify, controller.getSingleOrder);
-// router.get("/me", verify, controller.myOrders);
+router.post("/", verify, order.createOrder);
+router.put("/", verify, order.updatetOrder);
+router.get("/:id", verify, order.getOrderById);
+router.get("/", verify, order.getAllOrder);
+router.get("/count", verify, order.orderCount);
+router.get("/user/:id", verify, order.getAllOrderByUserId);
 
 
-// module.exports = router;
-// // 
+module.exports = router;

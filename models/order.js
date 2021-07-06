@@ -46,7 +46,15 @@ const orderSchema = mongoose.Schema(
     },
     orderStatus: {
       type: String,
-      default: "Processing",
+      enum: {
+        values: [
+          "Unconfirmed",
+          "Placed",
+          "Out for delivery",
+          "Delivery"
+        ],
+        message: "Please select correct status for order",
+      },
     },
   },
   { timestamps: true }

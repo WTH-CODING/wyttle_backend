@@ -1,62 +1,241 @@
-// const Order = require("../models/order");
-// const Product = require("../models/product");
+const Order = require("../models/order");
+const Product = require("../models/product");
 
-// const ErrorHandler = require("../utils/errorHandler");
-// const catchAsyncErrors = require("../middlewares/catchAsyncErrors");
+exports.createOrder = (req, res) => {
+    const order = new Order(req.body);
+    console.log(order.orderItems);
+    order.save((err, createdorder) => {
+        if (err) {
+            console.log(err);
+            res.status(400).json({
+                error: "error saving order in DB",
+            });
+        } else res.json({ message: "order saved" , order: createdorder});
+    });
+};
 
-// // Create a new order   =>  /api/v1/order/new
-// exports.newOrder = catchAsyncErrors(async (req, res, next) => {
-//   const {
-//     orderItems,
-//     shippingInfo,
-//     itemsPrice,
-//     taxPrice,
-//     shippingPrice,
-//     totalPrice,
-//     paymentInfo,
-//   } = req.body;
+exports.updatetOrder = (req, res) => {
+    Order.updateOne(
+        { _id: req.body._id },
+        { $set: req.body },
+        (err, orderUpdated) => {
+            if (err) {
+                res.status(400).json({
+                    error: "error updating order in DB",
+                });
+            } else
+                res.json({
+                    message: "Updated",
+                });
+        }
+    );
+};
 
-//   const order = await Order.create({
-//     orderItems,
-//     shippingInfo,
-//     itemsPrice,
-//     taxPrice,
-//     shippingPrice,
-//     totalPrice,
-//     paymentInfo,
-//     paidAt: Date.now(),
-//     user: req.user._id,
-//   });
+exports.getAllOrder = (req, res) => {
+    Order.find()
+        .populate({
+            path: "orderItems",
+            populate: {
+                path: "item",
+                models: "Item",
+            },
+        })
+        .populate("user")
+        .sort([["createdAt", "desc"]])
+        .exec((err, orders) => {
+            if (err) {
+                console.log(err);
+                res.status(400).json({
+                    error: "error getting items from DB",
+                });
+            } else res.json(orders);
+        });
+};
 
-//   res.status(200).json({
-//     success: true,
-//     order,
-//   });
-// });
+exports.getOrderById = (req, res) => {
+    Order.findById(req.params.id)
+        .populate({
+            path: "orderItems",
+            populate: {
+                path: "item",
+                models: "Item",
+            },
+        })
+        .populate("user")
+        .sort([["createdAt", "desc"]])
+        .exec((err, orders) => {
+            if (err) {
+                console.log(err);
+                res.status(400).json({
+                    error: "error getting items from DB",
+                });
+            } else res.json(orders);
+        });
+};
 
-// // Get single order   =>   /api/v1/order/:id
-// exports.getSingleOrder = catchAsyncErrors(async (req, res, next) => {
-//   const order = await Order.findById(req.params.id).populate(
-//     "user",
-//     "name email"
-//   );
+//   exports.getAllUnconfirmedOrder = (req, res) => {
+//     Order.find({ status: "unconfirmed" })
+//       .populate({
+//         path: "items",
+//         populate: {
+//           path: "item",
+//           models: "Item",
+//         },
+//       })
+//       .populate("customer")
+//       .populate("deliveryby")
+//       .populate("offer")
+//       .sort([["createdAt", "desc"]])
+//       .exec((err, orders) => {
+//         if (err) {
+//           console.log(err);
+//           res.status(400).json({
+//             error: "error getting items from DB",
+//           });
+//         } else res.json(orders);
+//       });
+//   };
 
-//   if (!order) {
-//     return next(new ErrorHandler("No Order found with this ID", 404));
-//   }
+//   exports.getAllConfimredOrder = (req, res) => {
+//     Order.find({ status: { $ne: "unconfirmed" } })
+//       .populate({
+//         path: "items",
+//         populate: {
+//           path: "item",
+//           models: "Item",
+//         },
+//       })
+//       .populate("customer")
+//       .populate("deliveryby")
+//       .populate("offer")
+//       .sort([["createdAt", "desc"]])
+//       .exec((err, orders) => {
+//         if (err) {
+//           console.log(err);
+//           res.status(400).json({
+//             error: "error getting items from DB",
+//           });
+//         } else res.json(orders);
+//       });
+//   };
 
-//   res.status(200).json({
-//     success: true,
-//     order,
-//   });
-// });
+//   exports.getConfirmedOrderByCount = (req, res) => {
+//     Order.find({ status: "unconfirmed" })
+//       .skip(req.body.skip)
+//       .limit(req.body.limit)
+//       .populate({
+//         path: "items",
+//         populate: {
+//           path: "item",
+//           models: "Item",
+//         },
+//       })
+//       .populate("customer")
+//       .populate("deliveryby")
+//       .populate("offer")
+//       .sort([["createdAt", "desc"]])
+//       .exec((err, orders) => {
+//         if (err) {
+//           console.log(err);
+//           res.status(400).json({
+//             error: "error getting items from DB",
+//           });
+//         } else res.json(orders);
+//       });
+//   };
 
-// // Get logged in user orders   =>   /api/v1/orders/me
-// exports.myOrders = catchAsyncErrors(async (req, res, next) => {
-//   const orders = await Order.find({ user: req.user.id });
+//   exports.getUnconfirmedOrderByCount = (req, res) => {
+//     Order.find({ status: { $ne: "unconfirmed" } })
+//       .skip(req.body.skip)
+//       .limit(req.body.limit)
+//       .populate({
+//         path: "items",
+//         populate: {
+//           path: "item",
+//           models: "Item",
+//         },
+//       })
+//       .populate("customer")
+//       .populate("deliveryby")
+//       .populate("offer")
+//       .sort([["createdAt", "desc"]])
+//       .exec((err, orders) => {
+//         if (err) {
+//           console.log(err);
+//           res.status(400).json({
+//             error: "error getting items from DB",
+//           });
+//         } else res.json(orders);
+//       });
+//   };
 
-//   res.status(200).json({
-//     success: true,
-//     orders,
-//   });
-// });
+//   exports.getOrderByCount = (req, res) => {
+//     Order.find()
+//       .skip(req.body.skip)
+//       .limit(req.body.limit)
+//       .populate({
+//         path: "items",
+//         populate: {
+//           path: "item",
+//           models: "Item",
+//         },
+//       })
+//       .populate("customer")
+//       .populate("deliveryby")
+//       .populate("offer")
+//       .sort([["createdAt", "desc"]])
+//       .exec((err, orders) => {
+//         if (err) {
+//           console.log(err);
+//           res.status(400).json({
+//             error: "error getting items from DB",
+//           });
+//         } else res.json(orders);
+//       });
+//   };
+
+exports.getAllOrderByUserId = (req, res) => {
+    Order.find({ customer: req.body.id })
+        .populate({
+            path: "items",
+            populate: {
+                path: "item",
+                models: "Item",
+            },
+        })
+        .populate({
+            path: "customer",
+            populate: {
+                path: "cart",
+                populate: {
+                    path: "item",
+                    models: "Item",
+                },
+            },
+        })
+        .populate("deliveryby")
+        .populate("offer")
+        .sort([["createdAt", "desc"]])
+        .exec((err, orders) => {
+            if (err) {
+                console.log(err);
+                res.status(400).json({
+                    error: "error getting items from DB",
+                });
+            } else res.json(orders);
+        });
+};
+
+exports.orderCount = (req, res) => {
+    Order.collection.countDocuments({}, (err, ordercount) => {
+        if (err) {
+            res.status(400).json({
+                error: "order count error",
+            });
+        } else {
+            res.json({
+                ordercount,
+            });
+        }
+    });
+};
