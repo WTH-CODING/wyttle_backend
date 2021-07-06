@@ -1,4 +1,7 @@
+// =======
 // const Product = require("../models/product");
+
+// const ErrorHandler = require("../utils/errorHandler");
 // const catchAsyncErrors = require("../middlewares/catchAsyncErrors");
 // const APIFeatures = require("../utils/apiFeatures");
 
@@ -6,16 +9,17 @@
 // exports.getProducts = catchAsyncErrors(async (req, res, next) => {
 //   const resPerPage = 4;
 //   const productsCount = await Product.countDocuments();
-
-//   const apiFeatures = new APIFeatures(Product.find(), req.query)
-//     .search()
-//     .filter();
-
-//   let products = await apiFeatures.query;
+//   let products = [];
+//   await Product.find({}, (err, foundProducts) => {
+//     if (err) {
+//       console.log(err);
+//     } else {
+//       foundProducts.forEach((product) => {
+//         products.push(product);
+//       });
+//     }
+//   });
 //   let filteredProductsCount = products.length;
-
-//   apiFeatures.pagination(resPerPage);
-//   products = await apiFeatures.query;
 
 //   res.status(200).json({
 //     success: true,
@@ -29,6 +33,10 @@
 // // Get single product details   =>   /api/v1/product/:id
 // exports.getSingleProduct = catchAsyncErrors(async (req, res, next) => {
 //   const product = await Product.findById(req.params.id);
+
+//   if (!product) {
+//     return next(new ErrorHandler("Product not found", 404));
+//   }
 
 //   res.status(200).json({
 //     success: true,
@@ -85,10 +93,11 @@
 
 // // Get Product Reviews   =>   /api/v1/reviews
 // exports.getProductReviews = catchAsyncErrors(async (req, res, next) => {
-//   const product = await Product.findById(req.query.id);
+//   const product = await Product.findById(req.params.id);
 
 //   res.status(200).json({
 //     success: true,
 //     reviews: product.reviews,
 //   });
 // });
+// >>>>>>> cda146de4f89e6a4174dbd14d509c46f9deb75db

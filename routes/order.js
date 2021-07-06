@@ -5,9 +5,10 @@
 
 // const { verify } = require("../middlewares/verifyToken");
 
-// router.post("/order/new", verify, controller.newOrder);
-// router.get("/order/:id", verify, controller.getSingleOrder);
-// router.get("/orders/me", verify, controller.myOrders);
+// router.post("/new", verify, controller.newOrder);
+// router.get("/:id", verify, controller.getSingleOrder);
+// router.get("/me", verify, controller.myOrders);
+
 
 // module.exports = router;
 // // 
