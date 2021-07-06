@@ -12,6 +12,17 @@ exports.getProducts = (req, res) => {
     });
 };
 
+exports.getProductsByCategory = (req, res) => {
+    Product.find({ category: req.params.id }).sort([["createdAt", "desc"]]).exec((err, items) => {
+        if (err) {
+            res.status(400).json({
+                error: "error getting items from DB",
+            });
+        }
+        res.json(items);
+    });
+};
+
 exports.getHomeProducts = (req, res) => {
     Product.find().sort([["createdAt", "desc"]]).limit(10).exec((err, items) => {
         if (err) {
@@ -138,14 +149,14 @@ exports.getProductReviews = async (req, res) => {
 
 exports.productCount = (req, res) => {
     Product.collection.countDocuments({}, (err, count) => {
-      if (err) {
-        res.status(400).json({
-          message: "prod count error",
-        });
-      } else {
-        res.json({
-          count,
-        });
-      }
+        if (err) {
+            res.status(400).json({
+                message: "prod count error",
+            });
+        } else {
+            res.json({
+                count,
+            });
+        }
     });
-  };
+};
