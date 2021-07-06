@@ -2,7 +2,18 @@ const Product = require("../models/product");
 
 
 exports.getProducts = (req, res) => {
-    Product.find().sort([["name", "asc"]]).exec((err, items) => {
+    Product.find().sort([["createdAt", "desc"]]).exec((err, items) => {
+        if (err) {
+            res.status(400).json({
+                error: "error getting items from DB",
+            });
+        }
+        res.json(items);
+    });
+};
+
+exports.getHomeProducts = (req, res) => {
+    Product.find().sort([["createdAt", "desc"]]).limit(10).exec((err, items) => {
         if (err) {
             res.status(400).json({
                 error: "error getting items from DB",

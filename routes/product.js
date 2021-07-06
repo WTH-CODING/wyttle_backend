@@ -7,6 +7,7 @@ const { verify } = require("../middlewares/verifyToken");
 
 
 router.get("/", verify ,product.getProducts);
+router.get("/home", verify ,product.getHomeProducts);
 router.get("/:id", verify ,product.getSingleProduct);
 router.post("/", verify ,product.createProduct);
 router.put("/", verify ,product.updateProduct);
