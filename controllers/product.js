@@ -91,62 +91,6 @@ exports.updateProduct = (req, res) => {
     );
 };
 
-exports.createProductReview = async (req, res) => {
-    const { rating, description, title, productId } = req.body;
-
-    const review = {
-        user: req.user._id,
-        title,
-        rating: Number(rating),
-        description: req.user.description,
-    };
-
-    const product = await Product.findById(productId);
-
-    const isReviewed = product.reviews.find(
-        (r) => r.user.toString() === req.user._id.toString()
-    );
-
-    if (isReviewed) {
-        product.reviews.forEach((review) => {
-            if (review.user.toString() === req.user._id.toString()) {
-                review.description = description;
-                review.rating = rating;
-            }
-        });
-    } else {
-        product.reviews.push(review);
-        product.numOfReviews = product.reviews.length;
-    }
-
-    product.ratings =
-        product.reviews.reduce((acc, item) => item.rating + acc, 0) /
-        product.reviews.length;
-
-    await product.save({ validateBeforeSave: false });
-    await User.findById(req.user._id, (err, foundUser) => {
-        if (err) {
-            console.log(err);
-        } else {
-            foundUser.numOfCoins = foundUser.numOfCoins + 1;
-        }
-    });
-
-    res.status(200).json({
-        success: true,
-    });
-};
-
-exports.getProductReviews = async (req, res) => {
-    const product = await Product.findById(req.params.id);
-
-    res.status(200).json({
-        success: true,
-        reviews: product.reviews,
-    });
-};
-
-
 exports.productCount = (req, res) => {
     Product.collection.countDocuments({}, (err, count) => {
         if (err) {

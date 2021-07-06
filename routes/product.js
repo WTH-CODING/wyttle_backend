@@ -15,9 +15,5 @@ router.post("/", verify ,product.createProduct);
 router.put("/", verify ,product.updateProduct);
 router.delete("/:id", verify ,product.deleteProduct);
 
-// router.put("/review/create", verify, controller.createProductReview);
-// router.get("/reviews", controller.getProductReviews);
-// router.delete("/review/delete/:id", verify, controller.deleteReview);
-
 
 module.exports = router;
