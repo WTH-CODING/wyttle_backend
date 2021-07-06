@@ -6,7 +6,8 @@ const review = require("../controllers/review");
 const { verify } = require("../middlewares/verifyToken");
 
 router.post("/", verify, review.createReview);
-router.post("/thumb/:id", verify, review.updateThumbReview);
+router.post("/thumb/update/:id", verify, review.updateThumbReview);
+router.get("/thumb/:id", verify, review.getThumbReview);
 router.get("/:id", verify, review.getReviewById);
 router.get("/", verify, review.getAllReviews);
 router.get("/count", verify, review.reviewCount);

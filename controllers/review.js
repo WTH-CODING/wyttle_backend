@@ -93,6 +93,20 @@ exports.updateThumbReview = (req, res) => {
     res.json("succes");
 };
 
+exports.getThumbReview = (req, res) => {
+    Thumb.find({ review: req.params.id }).exec((err, reviews) => {
+        if (err) {
+            res.status(400).json({
+                message: "review thumnb error",
+            });
+        } else {
+            res.json({
+                reviews,
+            });
+        }
+    });
+}
+
 exports.reviewCount = (req, res) => {
     Review.collection.countDocuments({}, (err, count) => {
         if (err) {
