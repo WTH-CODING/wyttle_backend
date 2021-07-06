@@ -71,7 +71,6 @@ exports.getAllReviews = (req, res) => {
 };
 
 exports.updateThumbReview = (req, res) => {
-    console.log(req.body);
     Review.findById(req.params.id).exec((err, review) => {
         const thumb = new Thumb(req.body);
         if (req.body.vouteUp) {
