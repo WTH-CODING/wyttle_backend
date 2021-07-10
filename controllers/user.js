@@ -49,7 +49,19 @@ exports.getUserByEmail = (req, res) => {
 
 exports.getAllUsers = (req, res) => {
   User.find()
-    .sort({ "createdAt": -1 })
+    .sort({ "createdAt": -1 }).populate({
+      path: "cart",
+      populate: {
+        path: "item",
+        models: "Product",
+      },
+    }).populate({
+      path: "wishlist",
+      populate: {
+        path: "item",
+        models: "Product",
+      },
+    })
     .exec((err, user) => {
       if (err) {
         res.status(400).json({
