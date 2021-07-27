@@ -9,7 +9,7 @@ const { verify } = require("../middlewares/verifyToken");
 router.get("/", product.getProducts);
 router.get("/category/:id", product.getProductsByCategory);
 router.get("/count", verify ,product.productCount);
-router.get("/home", verify ,product.getHomeProducts);
+router.get("/home", product.getHomeProducts);
 router.get("/:id", product.getSingleProduct);
 // router.post("/", verify ,product.createProduct);
 router.post("/" ,product.createProduct);
