@@ -12,5 +12,4 @@ router.get("/", verify, order.getAllOrder);
 router.get("/count", verify, order.orderCount);
 router.get("/user/:id", verify, order.getAllOrderByUserId);
 
-
 module.exports = router;

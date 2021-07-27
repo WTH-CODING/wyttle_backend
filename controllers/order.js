@@ -62,6 +62,7 @@ exports.getAllOrder = (req, res) => {
 
 exports.getOrderById = (req, res) => {
     Order.findById(req.params.id)
+        .populate("user")
         .populate({
             path: "orderItems",
             populate: {
@@ -69,7 +70,6 @@ exports.getOrderById = (req, res) => {
                 models: "Item",
             },
         })
-        .populate("user")
         .sort([["createdAt", "desc"]])
         .exec((err, orders) => {
             if (err) {
@@ -81,129 +81,9 @@ exports.getOrderById = (req, res) => {
         });
 };
 
-//   exports.getAllUnconfirmedOrder = (req, res) => {
-//     Order.find({ status: "unconfirmed" })
-//       .populate({
-//         path: "items",
-//         populate: {
-//           path: "item",
-//           models: "Item",
-//         },
-//       })
-//       .populate("customer")
-//       .populate("deliveryby")
-//       .populate("offer")
-//       .sort([["createdAt", "desc"]])
-//       .exec((err, orders) => {
-//         if (err) {
-//           console.log(err);
-//           res.status(400).json({
-//             error: "error getting items from DB",
-//           });
-//         } else res.json(orders);
-//       });
-//   };
-
-//   exports.getAllConfimredOrder = (req, res) => {
-//     Order.find({ status: { $ne: "unconfirmed" } })
-//       .populate({
-//         path: "items",
-//         populate: {
-//           path: "item",
-//           models: "Item",
-//         },
-//       })
-//       .populate("customer")
-//       .populate("deliveryby")
-//       .populate("offer")
-//       .sort([["createdAt", "desc"]])
-//       .exec((err, orders) => {
-//         if (err) {
-//           console.log(err);
-//           res.status(400).json({
-//             error: "error getting items from DB",
-//           });
-//         } else res.json(orders);
-//       });
-//   };
-
-//   exports.getConfirmedOrderByCount = (req, res) => {
-//     Order.find({ status: "unconfirmed" })
-//       .skip(req.body.skip)
-//       .limit(req.body.limit)
-//       .populate({
-//         path: "items",
-//         populate: {
-//           path: "item",
-//           models: "Item",
-//         },
-//       })
-//       .populate("customer")
-//       .populate("deliveryby")
-//       .populate("offer")
-//       .sort([["createdAt", "desc"]])
-//       .exec((err, orders) => {
-//         if (err) {
-//           console.log(err);
-//           res.status(400).json({
-//             error: "error getting items from DB",
-//           });
-//         } else res.json(orders);
-//       });
-//   };
-
-//   exports.getUnconfirmedOrderByCount = (req, res) => {
-//     Order.find({ status: { $ne: "unconfirmed" } })
-//       .skip(req.body.skip)
-//       .limit(req.body.limit)
-//       .populate({
-//         path: "items",
-//         populate: {
-//           path: "item",
-//           models: "Item",
-//         },
-//       })
-//       .populate("customer")
-//       .populate("deliveryby")
-//       .populate("offer")
-//       .sort([["createdAt", "desc"]])
-//       .exec((err, orders) => {
-//         if (err) {
-//           console.log(err);
-//           res.status(400).json({
-//             error: "error getting items from DB",
-//           });
-//         } else res.json(orders);
-//       });
-//   };
-
-//   exports.getOrderByCount = (req, res) => {
-//     Order.find()
-//       .skip(req.body.skip)
-//       .limit(req.body.limit)
-//       .populate({
-//         path: "items",
-//         populate: {
-//           path: "item",
-//           models: "Item",
-//         },
-//       })
-//       .populate("customer")
-//       .populate("deliveryby")
-//       .populate("offer")
-//       .sort([["createdAt", "desc"]])
-//       .exec((err, orders) => {
-//         if (err) {
-//           console.log(err);
-//           res.status(400).json({
-//             error: "error getting items from DB",
-//           });
-//         } else res.json(orders);
-//       });
-//   };
-
 exports.getAllOrderByUserId = (req, res) => {
     Order.find({ customer: req.body.id })
+        .populate("user")
         .populate({
             path: "items",
             populate: {
@@ -211,18 +91,6 @@ exports.getAllOrderByUserId = (req, res) => {
                 models: "Item",
             },
         })
-        .populate({
-            path: "customer",
-            populate: {
-                path: "cart",
-                populate: {
-                    path: "item",
-                    models: "Item",
-                },
-            },
-        })
-        .populate("deliveryby")
-        .populate("offer")
         .sort([["createdAt", "desc"]])
         .exec((err, orders) => {
             if (err) {
