@@ -83,12 +83,21 @@ exports.getOrderById = (req, res) => {
 
 exports.getAllOrderByUserId = (req, res) => {
     Order.find({ customer: req.body.id })
-        .populate("user")
         .populate({
-            path: "items",
+            path: "orderItems",
             populate: {
                 path: "item",
                 models: "Item",
+            },
+        })
+        .populate({
+            path: "user",
+            populate: {
+                path: "cart",
+                populate: {
+                    path: "item",
+                    models: "Item",
+                },
             },
         })
         .sort([["createdAt", "desc"]])
