@@ -21,14 +21,14 @@ app.use("/api/v1/product", productRoute);
 app.use("/api/v1/order", orderRoute);
 app.use("/api/v1/review", reviewRoute);
 
-// app.get("/", (req, res) => {
-//   res.send("baba boi");
-// });
+app.use("/", express.static(path.join(__dirname, "/public")));
 
 app.get("/version", (req, res) => {
   res.send("1.0.0");
 });
 
-app.use("/", express.static(path.join(__dirname, "/public")));
+app.get('/*', function(req,res) {
+  res.sendFile(path.resolve(__dirname+'/public/','index.html'));
+});
 
 module.exports = app;

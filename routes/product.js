@@ -11,7 +11,8 @@ router.get("/category/:id", product.getProductsByCategory);
 router.get("/count", verify ,product.productCount);
 router.get("/home", verify ,product.getHomeProducts);
 router.get("/:id", product.getSingleProduct);
-router.post("/", verify ,product.createProduct);
+// router.post("/", verify ,product.createProduct);
+router.post("/" ,product.createProduct);
 router.put("/", verify ,product.updateProduct);
 router.delete("/:id", verify ,product.deleteProduct);
 
